@@ -13,11 +13,11 @@ import {
 } from "./styles";
 
 function ProductForm() {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [description, setDescription] = useState("");
-  const [stock, setStock] = useState("");
-  const [error, setError] = useState(""); // Estado para mensagens de erro
+  const [productName, setProductName] = useState("");
+  const [productDescription, setProductDescription] = useState("");
+  const [productPrice, setProductPrice] = useState("");
+  const [productStock, setProductStock] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -25,36 +25,37 @@ function ProductForm() {
     if (id) {
       const fetchProduct = async () => {
         try {
-          const response = await api.get(`/api/products/get-one-product/${id}`);
-          setName(response.data.data.product.name || "");
-          setPrice(response.data.data.product.price || "");
-          setDescription(response.data.data.product.description || "");
-          setStock(response.data.data.product.stock || "");
+          const { data } = await api.get(`/api/products/get-one-product/${id}`);
+          const { name, description, price, stock } = data.data.product;
+          setProductName(name);
+          setProductDescription(description);
+          setProductPrice(price.toString());
+          setProductStock(stock.toString());
         } catch (error) {
-          setError("Error fetching product details.");
+          setErrorMessage("Error fetching product details.");
         }
       };
       fetchProduct();
     }
   }, [id]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
     const productData = {
-      name: name,
-      price: parseFloat(price),
-      description: description,
-      stock: parseInt(stock, 10),
+      name: productName,
+      price: parseFloat(productPrice),
+      description: productDescription,
+      stock: parseInt(productStock, 10),
     };
 
     const token = localStorage.getItem("token");
     if (!token) {
-      setError("No token found. Please log in.");
+      setErrorMessage("No token found. Please log in.");
       return;
     }
 
-    const options = {
+    const requestOptions = {
       method: id ? "PATCH" : "POST",
       url: id
         ? `https://interview.t-alpha.com.br/api/products/update-product/${id}`
@@ -67,14 +68,14 @@ function ProductForm() {
     };
 
     try {
-      const response = await axios.request(options);
-      console.log("Product saved:", response.data);
+      const { data } = await axios.request(requestOptions);
+      console.log("Product saved:", data);
       navigate("/products");
     } catch (error) {
-      setError(
-        error.response && error.response.data && error.response.data.message
-          ? error.response.data.message
-          : "Failed to save the product."
+      const errorMessageFromResponse =
+        error.response && error.response.data && error.response.data.message;
+      setErrorMessage(
+        errorMessageFromResponse || "Failed to save the product."
       );
     }
   };
@@ -83,32 +84,31 @@ function ProductForm() {
     <ContainerPage>
       <ContainerProductForm>
         <TitlePage>{id ? "Edit Product" : "New Product"}</TitlePage>
-        {error && <ErrorMessage>{error}</ErrorMessage>}{" "}
-        {/* Exibe mensagem de erro */}
+        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
         <FormProduct onSubmit={handleSubmit}>
           <Input
             type="text"
             placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={productName}
+            onChange={(event) => setProductName(event.target.value)}
           />
           <Input
             type="text"
             placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            value={productDescription}
+            onChange={(event) => setProductDescription(event.target.value)}
           />
           <Input
             type="number"
             placeholder="Price"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
+            value={productPrice}
+            onChange={(event) => setProductPrice(event.target.value)}
           />
           <Input
             type="number"
             placeholder="Stock"
-            value={stock}
-            onChange={(e) => setStock(e.target.value)}
+            value={productStock}
+            onChange={(event) => setProductStock(event.target.value)}
           />
           <ButtonCreate type="submit">{id ? "Update" : "Create"}</ButtonCreate>
         </FormProduct>

@@ -2,12 +2,10 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const ContainerNavBar = styled.nav`
+const StyledNavBar = styled.nav`
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 100%;
   height: 80px;
   border-bottom: 1px solid #ccc;
   background-color: #f8f9fa;
@@ -21,16 +19,16 @@ const NavList = styled.ul`
 `;
 
 const NavItem = styled.li`
-  margin: 0 15px; /* Espaço entre os itens */
+  margin-right: 15px;
 `;
 
 const NavLink = styled(Link)`
   text-decoration: none;
-  color: #007bff; /* Cor dos links */
+  color: #007bff;
   font-weight: bold;
 
   &:hover {
-    color: #0056b3; /* Cor ao passar o mouse */
+    color: #0056b3;
   }
 `;
 
@@ -43,7 +41,7 @@ const LogoutButton = styled.button`
   margin-left: 15px;
 
   &:hover {
-    color: #0056b3; /* Cor ao passar o mouse */
+    color: #0056b3;
   }
 `;
 
@@ -57,21 +55,18 @@ function NavBar() {
   };
 
   return (
-    <>
+    <StyledNavBar>
       {token && (
-        <ContainerNavBar>
-          <NavList>
-            <NavItem>
-              <NavLink to="/">Home</NavLink>
-            </NavItem>
-
-            <NavItem>
-              <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
-            </NavItem>
-          </NavList>
-        </ContainerNavBar>
+        <NavList>
+          <NavItem>
+            <NavLink to="/">Home</NavLink>
+          </NavItem>
+          <NavItem>
+            <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
+          </NavItem>
+        </NavList>
       )}
-    </>
+    </StyledNavBar>
   );
 }
 

@@ -1,5 +1,14 @@
 import styled from "styled-components";
 
+export const ContainerPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px;
+  margin-bottom: 80px;
+`;
+
 export const ContainerLogin = styled.div`
   display: flex;
   flex-direction: column;

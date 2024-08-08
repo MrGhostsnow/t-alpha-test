@@ -2,42 +2,24 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import ProductCard from "../../components/ProductCard";
-import {
-  ContainerPage,
-  ContainerProductList,
-  SectionTitle,
-  TitlePage,
-  SectionListProducts,
-} from "./styles";
+import { ContainerPage, ContainerList, Title, ProductList } from "./styles";
 
-function ProductList() {
+function ProductListPage() {
   const [products, setProducts] = useState([]);
 
   const fetchProducts = async () => {
-    const token = localStorage.getItem("token"); // Obtém o token do localStorage
-
-    if (!token) {
-      console.error("No token found. Please log in.");
-      return;
-    }
-
+    const token = localStorage.getItem("token");
     const options = {
       method: "GET",
       url: "https://interview.t-alpha.com.br/api/products/get-all-products",
-      headers: {
-        Authorization: `Bearer ${token}`, // Adiciona o token ao cabeçalho
-      },
+      headers: { Authorization: `Bearer ${token}` },
     };
 
     try {
       const { data } = await axios.request(options);
-      console.log("Fetched products:", data);
-      setProducts(data.data.products); // Ajuste conforme o formato real dos dados
+      setProducts(data.data.products);
     } catch (error) {
-      console.error(
-        "Error fetching products:",
-        error.response ? error.response.data : error.message
-      );
+      console.error(error);
     }
   };
 
@@ -47,45 +29,32 @@ function ProductList() {
 
   const handleDelete = async (id) => {
     const token = localStorage.getItem("token");
-
-    if (!token) {
-      console.error("No token found. Please log in.");
-      return;
-    }
-
-    const options = {
+    const deleteOptions = {
       method: "DELETE",
       url: `https://interview.t-alpha.com.br/api/products/delete-product/${id}`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     };
 
     try {
-      await axios.request(options);
+      await axios.request(deleteOptions);
       setProducts(products.filter((product) => product.id !== id));
     } catch (error) {
-      console.error(
-        "Error deleting product:",
-        error.response ? error.response.data : error.message
-      );
+      console.error(error);
       alert("Failed to delete the product.");
     }
   };
 
   return (
     <ContainerPage>
-      <ContainerProductList>
-        <SectionTitle>
-          <TitlePage>Product List</TitlePage>
-          <Link
-            to="/products/new"
-            style={{ textDecoration: "none", color: "blue" }}
-          >
-            Add New Product
-          </Link>
-        </SectionTitle>
-        <SectionListProducts>
+      <ContainerList>
+        <Title>Product List</Title>
+        <Link
+          to="/products/new"
+          style={{ textDecoration: "none", color: "blue", marginBottom: 20 }}
+        >
+          Add New Product
+        </Link>
+        <ProductList>
           {products?.map((product) => (
             <ProductCard
               key={product.id}
@@ -93,10 +62,10 @@ function ProductList() {
               onDelete={handleDelete}
             />
           ))}
-        </SectionListProducts>
-      </ContainerProductList>
+        </ProductList>
+      </ContainerList>
     </ContainerPage>
   );
 }
 
-export default ProductList;
+export default ProductListPage;

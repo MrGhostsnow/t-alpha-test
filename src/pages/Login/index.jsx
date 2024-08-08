@@ -19,10 +19,10 @@ function Login() {
   const validateForm = () => {
     const errors = {};
     if (!taxNumber) {
-      errors.taxNumber = "CPF ou CNPJ é obrigatório.";
+      errors.taxNumber = "user ID is required.";
     }
     if (!password) {
-      errors.password = "Senha é obrigatória.";
+      errors.password = "password is required.";
     }
     setErrors(errors);
     return Object.keys(errors).length === 0;

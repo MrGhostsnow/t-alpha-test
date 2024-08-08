@@ -9,7 +9,7 @@ export const ContainerPage = styled.div`
   margin-bottom: 80px;
 `;
 
-export const ContainerProductList = styled.div`
+export const ContainerList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,12 +30,19 @@ export const SectionTitle = styled.section`
   }
 `;
 
-export const TitlePage = styled.h2`
+export const Title = styled.h2`
   font-size: 2rem;
   margin-bottom: 2rem;
 `;
 
-export const SectionListProducts = styled.section`
+export const AddNewProductLink = styled.a`
+  text-decoration: none;
+  color: blue;
+  cursor: pointer;
+  margin-bottom: 1rem;
+`;
+
+export const ProductList = styled.section`
   display: flex;
   flex-wrap: wrap;
   align-items: center;

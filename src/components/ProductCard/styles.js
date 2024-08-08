@@ -21,12 +21,12 @@ export const ProductName = styled.h3`
   margin-bottom: 1rem;
 `;
 
-export const ProductDescription = styled.p`
+export const Description = styled.p`
   font-size: 1.2rem;
   margin-bottom: 1rem;
 `;
 
-export const SectionNumbers = styled.section`
+export const Actions = styled.section`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -38,11 +38,13 @@ export const SectionNumbers = styled.section`
 export const Price = styled.p`
   font-size: 1.2rem;
   margin-bottom: 1rem;
+  text-align: center;
 `;
 
-export const ProductStock = styled.p`
+export const Stock = styled.p`
   font-size: 1.2rem;
   margin-bottom: 1rem;
+  text-align: center;
 `;
 
 export const LinkButtons = styled.div`
@@ -55,7 +57,7 @@ export const LinkButtons = styled.div`
   margin-bottom: 1rem;
 `;
 
-export const ButtonDelete = styled.button`
+export const DeleteButton = styled.button`
   background-color: #dc3545;
   color: #fff;
   border: none;
