@@ -2,6 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import ProductCard from "../../components/ProductCard";
+import {
+  ContainerPage,
+  ContainerProductList,
+  SectionTitle,
+  TitlePage,
+  SectionListProducts,
+} from "./styles";
 
 function ProductList() {
   const [products, setProducts] = useState([]);
@@ -67,19 +74,28 @@ function ProductList() {
   };
 
   return (
-    <div>
-      <h2>Product List</h2>
-      <Link to="/products/new">Add New Product</Link>
-      <ul>
-        {products?.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            onDelete={handleDelete}
-          />
-        ))}
-      </ul>
-    </div>
+    <ContainerPage>
+      <ContainerProductList>
+        <SectionTitle>
+          <TitlePage>Product List</TitlePage>
+          <Link
+            to="/products/new"
+            style={{ textDecoration: "none", color: "blue" }}
+          >
+            Add New Product
+          </Link>
+        </SectionTitle>
+        <SectionListProducts>
+          {products?.map((product) => (
+            <ProductCard
+              key={product.id}
+              product={product}
+              onDelete={handleDelete}
+            />
+          ))}
+        </SectionListProducts>
+      </ContainerProductList>
+    </ContainerPage>
   );
 }
 

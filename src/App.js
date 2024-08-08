@@ -9,12 +9,14 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ProductList from "./pages/ProductList";
 import ProductForm from "./pages/ProductForm";
+import NavBar from "./components/NavBar";
 
 function App() {
   const token = localStorage.getItem("token");
 
   return (
     <Router>
+      <NavBar />
       <Routes>
         <Route
           path="/"
