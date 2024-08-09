@@ -54,6 +54,10 @@ export const ButtonLogin = styled.button`
   width: 30%;
   font-size: 1.2rem;
   margin-bottom: 1rem;
+
+  @media (max-width: 425px) {
+    width: 100%;
+  }
 `;
 
 export const ErrorMessage = styled.p`
