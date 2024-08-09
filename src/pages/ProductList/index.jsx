@@ -54,15 +54,19 @@ function ProductListPage() {
         >
           Add New Product
         </Link>
-        <ProductList>
-          {products?.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onDelete={handleDelete}
-            />
-          ))}
-        </ProductList>
+        {products.length === 0 ? (
+          <p>No products found.</p>
+        ) : (
+          <ProductList>
+            {products?.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onDelete={handleDelete}
+              />
+            ))}
+          </ProductList>
+        )}
       </ContainerList>
     </ContainerPage>
   );
