@@ -24,21 +24,21 @@ function Register() {
   const validateForm = () => {
     const errors = {};
     if (!name) {
-      errors.name = "Nome é obrigatório.";
+      errors.name = "name is required.";
     }
     if (!taxNumber) {
-      errors.taxNumber = "CPF ou CNPJ é obrigatório.";
+      errors.taxNumber = "user ID is required.";
     }
     if (!mail) {
-      errors.mail = "E-mail é obrigatório.";
+      errors.mail = "e-mail is required.";
     } else if (!/\S+@\S+\.\S+/.test(mail)) {
-      errors.mail = "E-mail inválido.";
+      errors.mail = "e-mail is invalid.";
     }
     if (!phone) {
-      errors.phone = "Telefone é obrigatório.";
+      errors.phone = "phone is required.";
     }
     if (!password) {
-      errors.password = "Senha é obrigatória.";
+      errors.password = "password is required.";
     }
     setErrors(errors);
     return Object.keys(errors).length === 0;
@@ -63,13 +63,13 @@ function Register() {
       navigate("/login");
     } catch (error) {
       console.error(
-        "Falha no registro:",
+        "Registration failed:",
         error.response ? error.response.data : error.message
       );
       setErrors({
         submit: error.response
           ? error.response.data.message
-          : "Falha ao tentar realizar o registro.",
+          : "Failed when trying to register.",
       });
     }
   };
@@ -87,7 +87,7 @@ function Register() {
           />
           {errors.taxNumber && <ErrorMessage>{errors.taxNumber}</ErrorMessage>}
           <Input
-            placeholder="CPF ou CNPJ do usuário"
+            placeholder="User ID"
             value={taxNumber}
             onChange={(e) => setTaxNumber(e.target.value)}
           />
